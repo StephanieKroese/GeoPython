@@ -2,6 +2,7 @@ import numpy as np
 from mpl_toolkits.basemap import Basemap,cm
 import matplotlib.pyplot as plt
 import datetime
+from matplotlib.patches import Polygon
 
 def plot_and_timeSeries(url, var, var2, tlvl, dlvl, time, time2, lon, lat, llat, ulat, llon, rlon):
     
@@ -110,7 +111,13 @@ def plot_and_timeSeries(url, var, var2, tlvl, dlvl, time, time2, lon, lat, llat,
                 
         
     plt.subplot2grid((4, 6), (3, 4), colspan=2)
-    mapAttempt1=Basemap(projection='robin', lon_0=180)
+    lats = [ -5, 5, 5, -5 ]
+    lons = [ -170, -170, -120, -120 ]
+    mapAttempt1 = Basemap(projection='robin',lon_0=180)
     mapAttempt1.fillcontinents('k')
+    x, y = mapAttempt1( lons, lats )
+    xy = zip(x,y)
+    poly = Polygon(xy, edgecolor='r', facecolor='none', lw=2 )
+    plt.gca().add_patch(poly)
         
     plt.show()
